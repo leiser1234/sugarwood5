@@ -1,0 +1,12 @@
+# Local source material, generated review artifacts, and backups are not website content.
+/source-archive/
+/work/
+/screenshots/
+/seasonal-theme-backup-*/
+/ASSET-INVENTORY.md
+/COMPLETION-SUMMARY.md
+/CONTENT-REVIEW.md
+/CRAWL-LOG.md
+/SITE-AUDIT.md
+/URL-MAP.md
+
