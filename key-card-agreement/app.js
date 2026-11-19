@@ -8,17 +8,6 @@ function showStatus(message, type) {
   statusBox.className = `keycard-status keycard-status--${type}`;
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-}
-
 if (!apiBase) {
   submitButton.disabled = true;
   showStatus(
@@ -36,8 +25,8 @@ form.addEventListener("submit", async (event) => {
   payload.acknowledged = fields.get("acknowledged") === "on";
 
   submitButton.disabled = true;
-  submitButton.textContent = "Creating documents...";
-  showStatus("Creating your signed document package...", "notice");
+  submitButton.textContent = "Submitting...";
+  showStatus("Creating and emailing your signed documents...", "notice");
 
   try {
     const response = await fetch(`${apiBase}/api/submissions`, {
@@ -51,15 +40,16 @@ form.addEventListener("submit", async (event) => {
       throw new Error(body.errors?.join(" ") || "The signed documents could not be created.");
     }
 
-    const disposition = response.headers.get("Content-Disposition") || "";
-    const filename = disposition.match(/filename="([^"]+)"/)?.[1] || "signed-key-card-agreement.zip";
-    downloadBlob(await response.blob(), filename);
-    showStatus("Your agreement and Electronic Signature Certificate were created and downloaded.", "success");
+    const result = await response.json();
+    showStatus(
+      `Your agreement and Electronic Signature Certificate were emailed successfully. Submission ID: ${result.submissionId}`,
+      "success",
+    );
     form.reset();
   } catch (error) {
     showStatus(error.message, "error");
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = "Create signed document package";
+    submitButton.textContent = "Submit signed agreement";
   }
 });

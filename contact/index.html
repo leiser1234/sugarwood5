@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#071d2e">
   <title>Contact | Sugarwood at Farragut</title>
   <link rel="icon" href="../assets/images/favicon-summer.jpg?v=20260810" type="image/jpeg">
-  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/site.css?v=20261119-1">
 </head>
 <body>
   
@@ -44,9 +44,19 @@
     <p class="page-lead">Reach the volunteer HOA board by email or mail, and find the pool address.</p>
   </div>
 </section>
-<section class="section">
-  <div class="container">
-    <div class="contact-grid">
+<section class="section section-white">
+  <div class="container contact-form-layout">
+    <div class="contact-form-intro">
+      <span class="eyebrow">Send an inquiry</span>
+      <h2>What can we help with?</h2>
+      <p>Choose a topic and send your message through the secure Microsoft form below. Your inquiry will be recorded for the HOA board.</p>
+      <div class="notice notice-info"><p><strong>How it works:</strong> Submit the form below and Microsoft Forms will notify the HOA board. You do not need to open your own email application.</p></div>
+    </div>
+    <div class="contact-form-embed">
+      <iframe title="Sugarwood HOA Contact Form" src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=IiPm6On4lkm0Z_Uqu4JiW7DIwbyqonVInYNZdrJa4S5UMUNDWkZQS0dCTU5PVFdSMU5CNlJSU0JKSS4u&amp;embed=true" loading="eager" allowfullscreen></iframe>
+    </div>
+    <p class="contact-form-fallback">Having trouble viewing the form? <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=IiPm6On4lkm0Z_Uqu4JiW7DIwbyqonVInYNZdrJa4S5UMUNDWkZQS0dCTU5PVFdSMU5CNlJSU0JKSS4u" target="_blank" rel="noopener">Open it in a new window</a>.</p>
+    <div class="contact-grid contact-grid-after-form">
       <div class="contact-card"><span class="card-kicker">Email</span><h3>HOA Board</h3><p><a href="mailto:sugarwoodboard@sugarwood.org">sugarwoodboard@sugarwood.org</a></p></div>
       <div class="contact-card"><span class="card-kicker">Mail</span><h3>SHA Board of Directors</h3><address>PO Box 22702<br>Knoxville, TN 37933</address></div>
       <div class="contact-card"><span class="card-kicker">Pool</span><h3>Recreation area</h3><address>12137 Butternut Circle<br>Knoxville, TN 37934</address></div>
@@ -54,51 +64,12 @@
   </div>
 </section>
 <section class="section section-white">
-  <div class="container split contact-form-layout">
-    <div>
-      <span class="eyebrow">Send an inquiry</span>
-      <h2>What can we help with?</h2>
-      <p>Choose a topic so the message is clearly labeled. For now, every inquiry is addressed to the HOA board’s default email. Additional topic-specific recipients can be added later without changing this form.</p>
-      <div class="notice notice-info"><p><strong>How it works:</strong> Submitting this form opens your email application with the message filled in. You can review it before sending.</p></div>
-    </div>
-    <form class="contact-form" data-contact-form>
-      <div class="form-field">
-        <label for="contact-name">Name</label>
-        <input id="contact-name" name="name" type="text" autocomplete="name" required>
-      </div>
-      <div class="form-field">
-        <label for="contact-email">Email</label>
-        <input id="contact-email" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="form-field">
-        <label for="contact-subject">Subject</label>
-        <select id="contact-subject" name="subject" required>
-          <option value="">Choose a subject</option>
-          <option value="maintenance">Maintenance Issues</option>
-          <option value="keycard">Keycard Issues</option>
-          <option value="grill">Grill Area Reservation</option>
-          <option value="stingrays">Stingrays</option>
-          <option value="permit">Building Permit</option>
-          <option value="pool">Pool / Recreation Area</option>
-          <option value="website">Website Issue</option>
-          <option value="general">General Inquiry</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label for="contact-message">Message</label>
-        <textarea id="contact-message" name="message" rows="7" required></textarea>
-      </div>
-      <button class="button button-dark" type="submit">Create email</button>
-      <p class="form-status" aria-live="polite" data-contact-status></p>
-    </form>
-</section>
-<section class="section section-white">
   <div class="container content-stack">
     <div class="section-heading"><span class="eyebrow">Volunteer leadership</span><h2>Board roster</h2><p>The HOA board represents subdivision-wide interests, maintains common areas, and meets monthly.</p></div>
     <div class="board-table-wrap">
       <table class="board-table">
         <thead><tr><th scope="col">Position</th><th scope="col">Name</th></tr></thead>
-        <tbody><tr><td>President</td><td>Shane Pohlmann</td></tr><tr><td>Vice President</td><td>Crystal Campione</td></tr><tr><td>Treasurer</td><td>Bill Lewis</td></tr><tr><td>Director</td><td>Eric Leiser</td></tr><tr><td>Director</td><td>Russ Barber</td></tr><tr><td>Director</td><td>Jess Stockton</td></tr></tbody>
+        <tbody><tr><td>President</td><td>Shane Pohlmann</td></tr><tr><td>Vice President</td><td>Crystal Campione</td></tr><tr><td>Treasurer</td><td>Bill Lewis</td></tr><tr><td>Maintenance</td><td>Eric Leiser</td></tr><tr><td>Planning</td><td>Russ Barber</td></tr><tr><td>Secretary</td><td>Jess Stockton</td></tr></tbody>
       </table>
     </div>
     <p class="muted">Directors are elected for two-year terms at the annual Membership Meeting held each January. Each member household in good standing is entitled to one vote, according to the current public site.</p>
@@ -148,6 +119,6 @@
     </div>
   </div>
 </footer>
-  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/site.js?v=20261119-1"></script>
 </body>
 </html>

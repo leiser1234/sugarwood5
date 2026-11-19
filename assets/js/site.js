@@ -38,27 +38,51 @@
   /*
    * SEASONAL THEME SETTINGS
    *
-   * Automatic schedule: fall is September-November; winter is December-February;
-   * the original Sugarwood design is used March-August. To test any theme, add
-   * ?theme=fall, ?theme=winter, or ?theme=default to any page URL.
+   * Dates use America/New_York so the neighborhood changes seasons at the same
+   * time even when a visitor is browsing from another time zone.
    */
   var themes = {
-    default: {
-      label: "Welcome to Sugarwood",
-      notice: "Enjoy the community spaces, resident resources, and neighborhood information collected here.",
-      heroTitle: "Home is found here.",
-      heroCopy: "An established neighborhood in the heart of Farragut—close to schools, parks, shopping, and the places East Tennesseans love to explore.",
-      image: "images/Sugarwood-Pool-e1723392724342.jpg",
+    spring: {
+      label: "Spring in Sugarwood",
+      notice: "Spring brings fresh growth, neighborhood activity, and a new season for enjoying Sugarwood.",
+      heroTitle: "A fresh season at home.",
+      heroCopy: "Sugarwood is an established Farragut neighborhood where spring brings neighbors outdoors and community spaces back to life.",
+      image: "images/swentrancecropped.jpg",
+      secondaryImage: "images/Sugarwood-Pool-e1723392724342.jpg",
+      secondaryAlt: "Sugarwood community swimming pool at dusk",
+      secondaryPosition: "center",
+      aboutImage: "images/swentrancecropped.jpg",
+      aboutAlt: "Landscaped Sugarwood neighborhood entrance",
       favicon: "images/favicon-summer.jpg",
       faviconType: "image/jpeg",
       color: "#071d2e"
     },
-    fall: {
+    summer: {
+      label: "Summer in Sugarwood",
+      notice: "Summer is a season for the pool, recreation areas, neighborhood activities, and time together outdoors.",
+      heroTitle: "Summer starts close to home.",
+      heroCopy: "From pool days to evenings with neighbors, Sugarwood is a welcoming community in the heart of Farragut.",
+      image: "images/Sugarwood-Pool-e1723392724342.jpg",
+      secondaryImage: "images/Sugarwood-Pool-e1723392724342.jpg",
+      secondaryAlt: "Sugarwood community swimming pool at dusk",
+      secondaryPosition: "center",
+      aboutImage: "images/swentrancecropped.jpg",
+      aboutAlt: "Landscaped Sugarwood neighborhood entrance",
+      favicon: "images/favicon-summer.jpg",
+      faviconType: "image/jpeg",
+      color: "#071d2e"
+    },
+    autumn: {
       label: "Autumn in Sugarwood",
       notice: "A season for crisp walks, colorful trees, and connecting with neighbors throughout Sugarwood.",
       heroTitle: "A warm welcome, all season long.",
       heroCopy: "Sugarwood is a peaceful Farragut neighborhood where community feels close to home—especially in the colors of autumn.",
-      image: "images/sugarwood-fall-hero.png",
+      image: "images/sugarwood-front-fall-hero.jpg",
+      secondaryImage: "images/sugarwood-fall-path.jpg?v=20261118-3",
+      secondaryAlt: "Autumn path through a colorful Sugarwood landscape",
+      secondaryPosition: "right top",
+      aboutImage: "images/sugarwood-about-fall.jpg?v=20261118-1",
+      aboutAlt: "Sugarwood homes framed by colorful autumn trees",
       favicon: "images/favicon-autumn.ico",
       faviconType: "image/x-icon",
       color: "#4a2a1b"
@@ -69,22 +93,39 @@
       heroTitle: "A neighborhood that feels like home.",
       heroCopy: "From calm winter mornings to the promise of spring, Sugarwood is a welcoming community in the heart of Farragut.",
       image: "images/sugarwood-winter-hero.png",
+      secondaryImage: "images/Sugarwood-Pool-e1723392724342.jpg",
+      secondaryAlt: "Sugarwood community swimming pool at dusk",
+      secondaryPosition: "center",
+      aboutImage: "images/swentrancecropped.jpg",
+      aboutAlt: "Landscaped Sugarwood neighborhood entrance",
       favicon: "images/favicon-winter.ico",
       faviconType: "image/x-icon",
       color: "#102b43"
     }
   };
 
-  function automaticTheme() {
-    var month = new Date().getMonth() + 1;
-    if (month >= 9 && month <= 11) return "fall";
-    if (month === 12 || month <= 2) return "winter";
-    return "default";
+  function themeForMonthDay(month, day) {
+    var monthDay = month * 100 + day;
+    if (monthDay >= 1215 || monthDay < 301) return "winter";
+    if (monthDay >= 922) return "autumn";
+    if (monthDay >= 526) return "summer";
+    return "spring";
   }
 
-  function selectedTheme() {
-    var preview = new URLSearchParams(window.location.search).get("theme");
-    return themes[preview] ? preview : automaticTheme();
+  function automaticTheme() {
+    var now = new Date();
+    try {
+      var parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        month: "numeric",
+        day: "numeric"
+      }).formatToParts(now);
+      var month = Number(parts.find(function (part) { return part.type === "month"; }).value);
+      var day = Number(parts.find(function (part) { return part.type === "day"; }).value);
+      return themeForMonthDay(month, day);
+    } catch (error) {
+      return themeForMonthDay(now.getMonth() + 1, now.getDate());
+    }
   }
 
   function assetBase() {
@@ -92,7 +133,7 @@
     return script ? script.src.replace(/js\/site\.js(?:\?.*)?$/, "") : "assets/";
   }
 
-  var themeName = selectedTheme();
+  var themeName = automaticTheme();
   var theme = themes[themeName];
   var base = assetBase();
   document.documentElement.setAttribute("data-theme", themeName);
@@ -120,6 +161,19 @@
     if (copy) copy.textContent = theme.heroCopy;
   }
 
+  var homeSecondaryImage = document.querySelector("[data-seasonal-home-image]");
+  if (homeSecondaryImage && theme.secondaryImage) {
+    homeSecondaryImage.setAttribute("src", base + theme.secondaryImage);
+    if (theme.secondaryAlt) homeSecondaryImage.setAttribute("alt", theme.secondaryAlt);
+    if (theme.secondaryPosition) homeSecondaryImage.style.objectPosition = theme.secondaryPosition;
+  }
+
+  var aboutImage = document.querySelector("[data-seasonal-about-image]");
+  if (aboutImage && theme.aboutImage) {
+    aboutImage.setAttribute("src", base + theme.aboutImage);
+    if (theme.aboutAlt) aboutImage.setAttribute("alt", theme.aboutAlt);
+  }
+
   var main = document.getElementById("main-content");
   if (main) {
     var notice = document.createElement("aside");
@@ -127,78 +181,6 @@
     notice.setAttribute("aria-label", "Seasonal message");
     notice.innerHTML = '<div class="container"><strong>' + theme.label + '</strong><span>' + theme.notice + '</span></div>';
     main.insertBefore(notice, main.firstChild);
-  }
-
-  /* TEST-ONLY SEASON PREVIEW BAR — remove this block before publishing. */
-  var preview = document.createElement("nav");
-  var previewChoice = new URLSearchParams(window.location.search).get("theme");
-  var previewLinks = [
-    { label: "Original", value: "default", href: "?theme=default" },
-    { label: "Fall", value: "fall", href: "?theme=fall" },
-    { label: "Winter", value: "winter", href: "?theme=winter" },
-    { label: "Automatic", value: null, href: window.location.pathname }
-  ];
-
-  preview.className = "theme-preview theme-preview--test-only";
-  preview.setAttribute("aria-label", "Season preview (test only)");
-  preview.innerHTML = '<strong>Season preview</strong><span class="theme-preview__test-label">Test only</span><span class="theme-preview__links"></span>';
-
-  var previewLinkContainer = preview.querySelector(".theme-preview__links");
-  previewLinks.forEach(function (item) {
-    var link = document.createElement("a");
-    var isCurrent = item.value === previewChoice || (item.value === null && !themes[previewChoice]);
-    link.href = item.href;
-    link.textContent = item.label;
-    if (isCurrent) link.setAttribute("aria-current", "page");
-    previewLinkContainer.appendChild(link);
-  });
-
-  document.body.insertBefore(preview, document.body.firstChild);
-  /* END TEST-ONLY SEASON PREVIEW BAR. */
-
-  // Every subject currently goes to the board address. Add a route-specific
-  // address to `cc` later to copy another volunteer or committee automatically.
-  var defaultEmail = "sugarwoodboard@sugarwood.org";
-  var contactRoutes = {
-    maintenance: { label: "Maintenance Issues", to: defaultEmail, cc: "" },
-    keycard: { label: "Keycard Issues", to: defaultEmail, cc: "" },
-    grill: { label: "Grill Area Reservation", to: defaultEmail, cc: "" },
-    stingrays: { label: "Stingrays", to: defaultEmail, cc: "" },
-    permit: { label: "Building Permit", to: defaultEmail, cc: "" },
-    pool: { label: "Pool / Recreation Area", to: defaultEmail, cc: "" },
-    website: { label: "Website Issue", to: defaultEmail, cc: "" },
-    general: { label: "General Inquiry", to: defaultEmail, cc: "" }
-  };
-
-  var contactForm = document.querySelector("[data-contact-form]");
-  var contactStatus = document.querySelector("[data-contact-status]");
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      if (!contactForm.checkValidity()) {
-        contactForm.reportValidity();
-        return;
-      }
-
-      var data = new FormData(contactForm);
-      var route = contactRoutes[data.get("subject")] || contactRoutes.general;
-      var body = [
-        "Name: " + data.get("name"),
-        "Email: " + data.get("email"),
-        "Subject: " + route.label,
-        "",
-        data.get("message")
-      ].join("\n");
-      var params = new URLSearchParams({
-        subject: "Sugarwood HOA: " + route.label,
-        body: body
-      });
-
-      if (route.cc) params.set("cc", route.cc);
-      if (contactStatus) contactStatus.textContent = "Your email application should open with this message ready to review and send.";
-      window.location.href = "mailto:" + route.to + "?" + params.toString();
-    });
   }
 
   window.__SUGARWOOD_READY__ = true;

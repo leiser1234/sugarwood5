@@ -9,4 +9,10 @@
 /CRAWL-LOG.md
 /SITE-AUDIT.md
 /URL-MAP.md
+/deployment/
+**/__pycache__/
+*.py[cod]
+local.settings.json
+.env
+.env.*
 

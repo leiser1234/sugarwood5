@@ -25,7 +25,7 @@
 }
 
 /* Seasonal visual layers. Content stays shared across every theme. */
-body[data-theme="fall"] {
+body[data-theme="autumn"] {
   --navy-950: #352017;
   --navy-900: #59321e;
   --navy-800: #7c4725;
@@ -82,87 +82,6 @@ body[data-theme="winter"] {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.03rem;
 }
-
-/* TEST-ONLY SEASON PREVIEW BAR — remove through the END marker before publishing. */
-.theme-preview {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem 0.75rem;
-  width: 100%;
-  min-height: 3rem;
-  padding: 0.45rem 1rem;
-  color: var(--white);
-  background: var(--navy-950);
-  border-bottom: 2px solid var(--gold-300);
-  box-shadow: var(--shadow-lg);
-  font-size: 0.85rem;
-}
-
-.theme-preview strong {
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.theme-preview__test-label {
-  padding: 0.08rem 0.4rem;
-  color: var(--navy-950);
-  background: var(--gold-300);
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.theme-preview__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.3rem;
-}
-
-.theme-preview a {
-  padding: 0.25rem 0.45rem;
-  color: var(--white);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 999px;
-  text-decoration: none;
-}
-
-.theme-preview a:hover,
-.theme-preview a:focus-visible,
-.theme-preview a[aria-current="page"] {
-  color: var(--navy-950);
-  background: var(--gold-300);
-}
-
-body:has(.theme-preview--test-only) {
-  padding-top: 3rem;
-}
-
-@media (max-width: 35rem) {
-  .theme-preview {
-    align-content: center;
-    gap: 0.25rem 0.55rem;
-    min-height: 4.6rem;
-    padding-inline: 0.5rem;
-  }
-
-  .theme-preview__links {
-    flex-basis: 100%;
-  }
-
-  body:has(.theme-preview--test-only) {
-    padding-top: 4.6rem;
-  }
-}
-/* END TEST-ONLY SEASON PREVIEW BAR. */
 
 *,
 *::before,
@@ -407,16 +326,8 @@ ol {
   background-size: cover;
 }
 
-.hero::after {
-  position: absolute;
-  right: -7rem;
-  bottom: -8rem;
-  width: 24rem;
-  height: 24rem;
-  background: rgba(10, 163, 170, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  content: "";
+body[data-theme="autumn"] .hero {
+  background-image: linear-gradient(90deg, rgba(54, 25, 10, 0.86) 0%, rgba(96, 51, 17, 0.54) 52%, rgba(151, 85, 24, 0.12) 100%), var(--hero-image);
 }
 
 .hero-inner {
@@ -674,6 +585,14 @@ ol {
   box-shadow: var(--shadow-lg);
 }
 
+/* Home-page seasonal portrait: show the top seven-eighths of the 1:2 source. */
+.split-media img[data-seasonal-home-image] {
+  height: auto;
+  aspect-ratio: 4 / 7;
+  object-fit: cover;
+  object-position: right top;
+}
+
 .split-media::after {
   position: absolute;
   z-index: -1;
@@ -756,7 +675,7 @@ ol {
 .page-hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.4rem, 4.8vw, 4.5rem);
+  padding-block: clamp(0.8rem, 1.5vw, 1.25rem);
   color: var(--white);
   background: var(--navy-900);
 }
@@ -773,8 +692,11 @@ ol {
 }
 
 .page-hero h1 {
-  max-width: 14ch;
+  max-width: 11ch;
+  margin-bottom: 0.12em;
   color: var(--white);
+  font-size: clamp(1.85rem, 3.5vw, 3.25rem);
+  line-height: 1.04;
 }
 
 .schedule-date {
@@ -836,14 +758,15 @@ ol {
 }
 
 .page-lead {
-  max-width: 44rem;
+  max-width: 34rem;
   margin-bottom: 0;
   color: #d9e8ec;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-size: clamp(0.88rem, 1.25vw, 0.98rem);
+  line-height: 1.38;
 }
 
 .breadcrumb {
-  margin-bottom: 1rem;
+  margin-bottom: 0.22rem;
   color: #a9c5cd;
   font-size: 0.78rem;
   font-weight: 750;
@@ -1085,7 +1008,38 @@ ol {
 }
 
 .contact-form-layout {
-  align-items: start;
+  display: block;
+}
+
+.contact-form-intro {
+  max-width: 760px;
+  margin-bottom: 1.5rem;
+}
+
+.contact-form-embed {
+  overflow: hidden;
+  width: 100%;
+  min-height: 1500px;
+  border: 1px solid rgba(7, 29, 46, 0.14);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(7, 29, 46, 0.1);
+}
+
+.contact-form-embed iframe {
+  display: block;
+  width: 100%;
+  height: 1500px;
+  border: 0;
+}
+
+.contact-form-fallback {
+  margin: 1rem 0 0;
+  text-align: center;
+}
+
+.contact-grid-after-form {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
 }
 
 .contact-form {
@@ -1507,6 +1461,10 @@ ol {
     background-position: 60% center;
   }
 
+  body[data-theme="autumn"] .hero {
+    background-image: linear-gradient(rgba(67, 31, 12, 0.72), rgba(91, 47, 16, 0.8)), var(--hero-image);
+  }
+
   .hero-inner {
     padding-block: 4rem 6rem;
   }
@@ -1581,6 +1539,20 @@ ol {
   .schedule-card th {
     padding-bottom: 0;
     border-bottom: 0;
+  }
+
+  .contact-form-embed,
+  .contact-form-embed iframe {
+    min-height: 1850px;
+    height: 1850px;
+  }
+}
+
+@media (max-width: 350px) {
+  .contact-form-embed,
+  .contact-form-embed iframe {
+    min-height: 2050px;
+    height: 2050px;
   }
 }
 

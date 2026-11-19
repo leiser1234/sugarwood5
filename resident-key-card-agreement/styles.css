@@ -1,0 +1,245 @@
+.keycard-wrap {
+  width: min(68rem, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.keycard-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.8fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+}
+
+.keycard-intro h2,
+.keycard-card h2 {
+  margin-top: 0;
+  color: var(--navy-900);
+}
+
+.keycard-intro p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.keycard-note {
+  padding: 1rem 1.1rem;
+  border-left: 0.25rem solid var(--teal-600);
+  border-radius: var(--radius-sm);
+  background: var(--aqua-100);
+}
+
+.keycard-note strong,
+.keycard-note span {
+  display: block;
+}
+
+.keycard-note span {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.keycard-card {
+  margin-bottom: 1.25rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.keycard-heading {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.keycard-heading h2,
+.keycard-heading p {
+  margin-bottom: 0;
+}
+
+.keycard-heading p {
+  color: var(--muted);
+}
+
+.keycard-step {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--navy-900);
+  font-weight: 800;
+}
+
+.keycard-terms {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+.keycard-terms li {
+  padding-left: 0.35rem;
+}
+
+.keycard-terms li::marker {
+  color: var(--teal-600);
+  font-weight: 800;
+}
+
+.keycard-fields {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.keycard-field {
+  display: grid;
+  grid-column: span 3;
+  gap: 0.35rem;
+  color: var(--navy-900);
+  font-weight: 700;
+}
+
+.keycard-field--wide {
+  grid-column: 1 / -1;
+}
+
+.keycard-field--city {
+  grid-column: span 3;
+}
+
+.keycard-field--state {
+  grid-column: span 1;
+}
+
+.keycard-field--zip {
+  grid-column: span 2;
+}
+
+.keycard-field small {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.keycard-optional {
+  color: var(--muted);
+  font-size: 0.73rem;
+  text-transform: uppercase;
+}
+
+.keycard-field input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #aebbc6;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--white);
+  font: inherit;
+}
+
+.keycard-field input:focus {
+  border-color: var(--teal-600);
+  outline: 3px solid rgb(5 139 150 / 20%);
+}
+
+.keycard-acknowledgment {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--aqua-100);
+}
+
+.keycard-acknowledgment input {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.15rem;
+  accent-color: var(--navy-900);
+}
+
+.keycard-status {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.keycard-status:empty {
+  display: none;
+}
+
+.keycard-status--notice {
+  color: var(--navy-900);
+  border: 1px solid var(--warning-border);
+  background: var(--warning-bg);
+}
+
+.keycard-status--success {
+  color: #145c3c;
+  background: #e7f5ec;
+}
+
+.keycard-status--error {
+  color: #8f2828;
+  background: #fbecec;
+}
+
+.keycard-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+.keycard-actions p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.keycard-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+@media (max-width: 720px) {
+  .keycard-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .keycard-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .keycard-field,
+  .keycard-field--wide,
+  .keycard-field--city,
+  .keycard-field--state,
+  .keycard-field--zip {
+    grid-column: 1;
+  }
+
+  .keycard-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .keycard-actions .button {
+    width: 100%;
+  }
+}
